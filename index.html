@@ -220,12 +220,20 @@
   .s-thanks .chips span { color: var(--melon); }
   .s-thanks .after { margin-top: 30px; font-weight: 800; font-size: clamp(19px, 5.6vw, 23px); line-height: 1.45; }
 
-  /* 8. lưu vào tin nổi bật + chữ ký */
-  .hl-wrap { position: relative; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-  .hl-ring { padding: 5px; }
-  .hl-av { width: 150px; height: 150px; }
-  .hl-name { font-weight: 800; font-size: 1.05rem; text-shadow: 0 1px 6px rgba(0, 0, 0, .5); }
-  .pin-chip { position: relative; margin-top: 22px; background: #fff; color: #111; font-weight: 800; font-size: .98rem; padding: .55em 1em; border-radius: 12px; box-shadow: 0 10px 22px -10px rgba(0, 0, 0, .6); }
+  /* 8. quà cuối: ảnh story để đăng lại */
+  .s-final { gap: 12px; padding-top: 84px; padding-bottom: 92px; }
+  .gift-chip { position: relative; background: #fff; color: #111; font-weight: 900; font-size: 1rem; padding: .5em .95em; border-radius: 12px; box-shadow: 0 10px 22px -10px rgba(0, 0, 0, .6); }
+  .share-prev { position: relative; height: min(46vh, 360px); aspect-ratio: 9 / 16; border-radius: 16px; overflow: hidden; background: linear-gradient(165deg, var(--sunset-a), var(--sunset-b)); box-shadow: 0 24px 50px -18px rgba(0, 0, 0, .75), 0 0 0 3px #fff; cursor: pointer; }
+  .share-prev img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .dbl { position: absolute; left: 50%; top: 50%; font-size: 84px; transform: translate(-50%, -50%) scale(0); opacity: 0; pointer-events: none; filter: drop-shadow(0 6px 14px rgba(0, 0, 0, .4)); }
+  .dbl.go { animation: dbl .9s cubic-bezier(.3, 1.5, .5, 1) forwards; }
+  @keyframes dbl { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 30% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; } 70% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 100% { transform: translate(-50%, -80%) scale(1); opacity: 0; } }
+  .share-hint { position: relative; font-size: .8rem; font-weight: 600; opacity: .85; }
+  .share-btn { position: relative; padding: .85em 1.5em; border-radius: 999px; background: #fff; color: #111; font-weight: 900; box-shadow: 0 0 0 3px transparent, 0 12px 26px -10px rgba(0, 0, 0, .6); background-image: linear-gradient(#fff, #fff), var(--ring); background-origin: border-box; background-clip: padding-box, border-box; border: 3px solid transparent; }
+  .share-btn:active { transform: scale(.97); }
+  .share-more { position: relative; display: flex; gap: 16px; font-size: .86rem; font-weight: 700; }
+  .share-more button, .share-more a { color: #fff; text-decoration: underline dotted; text-underline-offset: 4px; padding: 4px 2px; }
+  .share-status { position: relative; min-height: 1.3em; font-size: .85rem; font-weight: 700; max-width: 300px; line-height: 1.45; text-wrap: balance; }
   .sig-neon { position: relative; margin-top: 34px; font-family: var(--script); font-size: clamp(24px, 7vw, 30px); line-height: 1.45; color: #ffe3f0; text-shadow: 0 0 6px var(--neon), 0 0 20px var(--neon); }
   .sig { position: relative; margin-top: 8px; font-family: var(--mono); font-weight: 700; opacity: .9; }
 
@@ -332,20 +340,26 @@ Một tháng chưa phải là dài,"></p>
 
       <!-- 7 -->
       <article class="slide s-thanks" data-dur="6500">
-        <div class="chips pop" style="--r:3deg"><span>Cảm ơn em</span><br /><span>vì đã thích</span><br /><span>anh trước 🙈</span></div>
-        <p class="after rise" style="--d:.7s">Giờ tới lượt anh<br />thích em nhiều hơn rồi nha.</p>
+        <div class="chips pop" style="--r:3deg"><span>Cảm ơn em</span><br /><span>vì một tháng</span><br /><span>dễ thương như vậy</span></div>
+        <p class="after rise" style="--d:.7s">Có em, ngày nào cũng<br />vui hơn một chút.</p>
       </article>
 
       <!-- 8 -->
-      <article class="slide s-final" data-dur="8000">
+      <!-- slide cuối không tự chuyển (data-stay): quà cho người xem hết tin -->
+      <article class="slide s-final" data-dur="7000" data-stay="1" data-kind="final">
         <div class="blurbg"></div><div class="shade"></div>
-        <div class="hl-wrap pop" style="--d:.1s">
-          <span class="ring hl-ring"><span class="avatar hl-av"></span></span>
-          <p class="hl-name">Tháng đầu tiên</p>
+        <p class="gift-chip pop" style="--d:.05s; --r:-3deg">🎁 quà cho người xem hết tin</p>
+        <div class="share-prev pop tap-ok" style="--d:.25s; --r:2deg" id="sharePrev">
+          <img id="shareImg" alt="Ảnh story tháng đầu tiên để đăng lại" />
+          <span class="dbl" id="dblHeart" aria-hidden="true">❤️</span>
         </div>
-        <p class="pin-chip pop" style="--d:.5s; --r:-3deg">📌 đã lưu vào tin nổi bật</p>
-        <p class="sig-neon rise" style="--d:.9s">Tháng đầu tiên của tụi mình,<br />anh giữ lại ở đây nè ♥</p>
-        <p class="sig rise" style="--d:1.3s" id="sig"></p>
+        <p class="share-hint rise" style="--d:.5s">chạm 2 lần vào ảnh để thả tim</p>
+        <button class="share-btn pop tap-ok" style="--d:.6s" id="shareBtn">📲 Đăng lên story của em</button>
+        <div class="share-more rise tap-ok" style="--d:.8s">
+          <button id="saveBtn">⬇️ lưu ảnh về máy</button>
+          <a id="dmBtn" target="_blank" rel="noopener" hidden>💬 nhắn cho <span id="dmName"></span></a>
+        </div>
+        <p class="share-status" id="shareStatus" role="status"></p>
       </article>
     </div>
 
@@ -384,6 +398,7 @@ const CONFIG = {
   music: "cho-chut.mp3",
   musicVolume: 0.9,
   letterLink: "https://20th10.dangpham.id.vn",
+  instagram: "", // tên Instagram của bạn (không có @) → hiện nút "nhắn cho Đăng" + lời nhắc tag
 };
 
 /* ========================================================= */
@@ -402,7 +417,6 @@ $("#headTime").textContent = CONFIG.postedAt;
 $("#locDay").textContent = CONFIG.day;
 $("#musicArtist").textContent = `${CONFIG.her} & ${CONFIG.me}`;
 $("#typeTag").textContent = `// từ ${CONFIG.me}, gửi ${CONFIG.her}`;
-$("#sig").textContent = `— ${CONFIG.me}`;
 $("#letterLink").href = $("#endLetter").href = CONFIG.letterLink;
 
 function tick() {
@@ -474,6 +488,9 @@ const hooks = {
       setTimeout(step, ch === "\n" ? 180 : ".,".includes(ch) ? 260 : 45 + Math.random() * 35);
     })();
   },
+  final() {
+    buildShare();
+  },
   poll(el) {
     const poll = el.querySelector(".poll");
     poll.classList.remove("voted");
@@ -510,8 +527,9 @@ function frame(t) {
   last = t;
   if (running && !paused && !document.hidden) {
     elapsed += dt;
-    if (elapsed >= DUR[idx]) show(idx + 1);
-    else renderBars();
+    if (elapsed < DUR[idx]) renderBars();
+    else if (slides[idx].dataset.stay) { elapsed = DUR[idx]; renderBars(); } // slide cuối đứng yên chờ em bấm
+    else show(idx + 1);
   }
   requestAnimationFrame(frame);
 }
@@ -527,6 +545,7 @@ function begin(withSound) {
   slides.forEach((s) => s.classList.remove("on"));
   idx = 0;
   show(0);
+  setTimeout(buildShare, 1200); // vẽ sẵn ảnh story để tới slide cuối bấm là chia sẻ được ngay
 }
 function finish() {
   running = false;
@@ -617,6 +636,162 @@ document.querySelectorAll(".reacts button").forEach((btn) => {
       ).onfinish = () => f.remove();
     }
   });
+});
+
+/* ---------- quà cuối: ảnh story 1080x1920 để đăng lại lên Instagram ---------- */
+let shareFile = null;
+let shareUrl = "";
+let sharePromise = null;
+const shareStatus = (msg) => ($("#shareStatus").textContent = msg);
+
+function rr(x, X, Y, w, h, r) {
+  x.beginPath();
+  x.moveTo(X + r, Y);
+  x.arcTo(X + w, Y, X + w, Y + h, r);
+  x.arcTo(X + w, Y + h, X, Y + h, r);
+  x.arcTo(X, Y + h, X, Y, r);
+  x.arcTo(X, Y, X + w, Y, r);
+  x.closePath();
+}
+
+// chữ có nền trắng như sticker story, trả về chiều cao
+function chip(x, text, X, Y, size, color) {
+  x.font = `900 ${size}px "Be Vietnam Pro", sans-serif`;
+  const padX = size * 0.34;
+  const h = size * 1.32;
+  x.fillStyle = "#fff";
+  rr(x, X, Y, x.measureText(text).width + padX * 2, h, size * 0.22);
+  x.fill();
+  x.fillStyle = color;
+  x.textBaseline = "middle";
+  x.fillText(text, X + padX, Y + h / 2 + size * 0.04);
+  return h;
+}
+
+function buildShare() {
+  if (sharePromise) return sharePromise;
+  sharePromise = (async () => {
+    await Promise.all([document.fonts.load('900 96px "Be Vietnam Pro"'), document.fonts.load('700 80px "Oswald"')]).catch(() => {});
+    const img = new Image();
+    img.src = "anh-doi.jpeg";
+    await img.decode();
+    const W = 1080;
+    const H = 1920;
+    const c = document.createElement("canvas");
+    c.width = W;
+    c.height = H;
+    const x = c.getContext("2d");
+    const g = x.createLinearGradient(0, 0, W, H);
+    g.addColorStop(0, "#ff8a3d");
+    g.addColorStop(1, "#ff3d6e");
+    x.fillStyle = g;
+    x.fillRect(0, 0, W, H);
+
+    // ảnh hai đứa, nghiêng nhẹ, viền trắng
+    const cw = 900;
+    const ch = (cw * img.naturalHeight) / img.naturalWidth;
+    x.save();
+    x.translate(W / 2, H / 2 + 30);
+    x.rotate((-3 * Math.PI) / 180);
+    x.shadowColor = "rgba(0,0,0,.35)";
+    x.shadowBlur = 70;
+    x.shadowOffsetY = 30;
+    x.fillStyle = "#fff";
+    rr(x, -cw / 2 - 14, -ch / 2 - 14, cw + 28, ch + 28, 44);
+    x.fill();
+    x.shadowColor = "transparent";
+    rr(x, -cw / 2, -ch / 2, cw, ch, 32);
+    x.clip();
+    x.drawImage(img, -cw / 2, -ch / 2, cw, ch);
+    x.restore();
+
+    x.save();
+    x.translate(90, 330);
+    x.rotate((-6 * Math.PI) / 180);
+    const h1 = chip(x, "tròn 1 tháng", 0, 0, 104, "#111");
+    chip(x, "rồi đó!", 0, h1 + 12, 104, "#111");
+    x.restore();
+
+    x.save();
+    x.translate(640, 1360);
+    x.rotate((5 * Math.PI) / 180);
+    chip(x, CONFIG.day, 0, 0, 52, "#ff3d6e");
+    x.restore();
+
+    x.fillStyle = "#fff";
+    x.textAlign = "center";
+    x.textBaseline = "alphabetic";
+    x.font = '700 84px "Oswald", sans-serif';
+    x.fillText(`${CONFIG.her} & ${CONFIG.me}`.toUpperCase(), W / 2, H - 300);
+    x.font = '700 44px "Be Vietnam Pro", sans-serif';
+    x.globalAlpha = 0.9;
+    x.fillText("tháng đầu tiên · 17.10 → 17.11", W / 2, H - 225);
+    x.globalAlpha = 1;
+
+    const blob = await new Promise((res, rej) => c.toBlob((b) => (b ? res(b) : rej(new Error("toBlob"))), "image/jpeg", 0.92));
+    shareFile = new File([blob], "thang-dau-tien.jpg", { type: "image/jpeg" });
+    shareUrl = URL.createObjectURL(blob);
+    $("#shareImg").src = shareUrl;
+  })().catch(() => {
+    $("#shareImg").src = "anh-doi.jpeg";
+  });
+  return sharePromise;
+}
+
+function saveImage() {
+  if (!shareUrl) return false;
+  const a = document.createElement("a");
+  a.href = shareUrl;
+  a.download = "thang-dau-tien.jpg";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  return true;
+}
+
+const SAVED_MSG = "Đã lưu ảnh ✓ Mở Instagram → Tin mới → chọn ảnh này nha";
+const afterShareMsg = () => (CONFIG.instagram ? `Đăng xong nhớ tag @${CONFIG.instagram} nha 👀` : `Đăng xong nhớ cho ${CONFIG.me} xem nha 👀`);
+
+$("#shareBtn").addEventListener("click", async () => {
+  if (!shareFile) {
+    shareStatus("Đang chuẩn bị ảnh, chờ xíu nha…");
+    await buildShare();
+  }
+  if (!shareFile) return shareStatus("Không tạo được ảnh, em chụp màn hình giúp anh nha 🙈");
+  if (navigator.canShare && navigator.canShare({ files: [shareFile] })) {
+    try {
+      await navigator.share({ files: [shareFile] });
+      shareStatus(afterShareMsg());
+    } catch (e) {
+      if (e.name !== "AbortError" && saveImage()) shareStatus(SAVED_MSG);
+    }
+  } else if (saveImage()) {
+    shareStatus(SAVED_MSG);
+  }
+});
+$("#saveBtn").addEventListener("click", async () => {
+  await buildShare();
+  if (saveImage()) shareStatus("Đã lưu ảnh về máy ✓");
+});
+if (CONFIG.instagram) {
+  $("#dmBtn").href = `https://ig.me/m/${encodeURIComponent(CONFIG.instagram)}`;
+  $("#dmName").textContent = CONFIG.me;
+  $("#dmBtn").hidden = false;
+}
+
+// chạm 2 lần vào ảnh để thả tim
+let lastTap = 0;
+$("#sharePrev").addEventListener("pointerup", () => {
+  const now = Date.now();
+  if (now - lastTap < 320) {
+    const h = $("#dblHeart");
+    h.classList.remove("go");
+    void h.offsetWidth;
+    h.classList.add("go");
+    lastTap = 0;
+  } else {
+    lastTap = now;
+  }
 });
 
 document.addEventListener("visibilitychange", () => {
