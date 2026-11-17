@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#f8e8e6" />
+<title>Tròn 1 tháng 💗 Nhi Nhi & Đăng</title>
+<meta name="description" content="17.10 → 17.11 · Tròn 1 tháng thương nhau." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Tròn 1 tháng 💗" />
+<meta property="og:description" content="17.10 → 17.11 · Chạm vào để mở nha" />
+<meta property="og:image" content="https://dang-ph.github.io/ki-niem-17-11/anh-doi.jpeg" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💗</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Patrick+Hand&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  /* cùng bảng màu với thiệp 20/10: hồng phấn + xanh sage + kem + vàng gold */
+  :root {
+    --cream: #fff9f2;
+    --paper: #fffbf6;
+    --rose-100: #f6dadd;
+    --rose-200: #efc3c9;
+    --rose-300: #e3a7b1;
+    --rose-400: #d58c99;
+    --rose-500: #c96b7e;
+    --rose-700: #a84e64;
+    --sage-200: #d5e2ce;
+    --sage-300: #b9cfaf;
+    --sage-400: #8faf8a;
+    --gold: #c9a66b;
+    --ink: #4e3b3f;
+    --ink-soft: #86696e;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    min-height: 100vh;
+    font-family: "Quicksand", system-ui, sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(circle at 14% 6%, #f7d9dc 0, transparent 34%),
+      radial-gradient(circle at 92% 60%, #e1ebd9 0, transparent 38%),
+      radial-gradient(circle at 80% 8%, #f6e7d2 0, transparent 30%),
+      linear-gradient(170deg, #fcf4ef 0%, #f8e8e6 50%, #f5eee4 100%);
+    background-attachment: fixed;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body.locked { overflow: hidden; }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cpath d='M32 41 C24 35 22 31 22 28 C22 25 24 23 27 23 C29 23 31 24 32 26 C33 24 35 23 37 23 C40 23 42 25 42 28 C42 31 40 35 32 41Z' fill='%23e3a7b1' fill-opacity='.16'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- hiệu ứng nền ---------- */
+  #fx, #fxTop { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+  #fx { z-index: 0; }
+  #fxTop { z-index: 60; }
+  #fx svg, #fxTop svg { display: block; }
+  .float { position: absolute; bottom: -40px; animation: rise var(--dur) linear forwards; }
+  @keyframes rise {
+    0%   { transform: translate(0, 0) rotate(0); }
+    50%  { transform: translate(var(--sway), -55vh) rotate(25deg); }
+    100% { transform: translate(0, -115vh) rotate(-15deg); opacity: 0; }
+  }
+  .spark { position: absolute; will-change: transform, opacity; }
+  .tap-heart { position: absolute; animation: tapfly .9s ease-out forwards; }
+  @keyframes tapfly {
+    0%   { transform: translate(-50%, -50%) scale(.4); opacity: 1; }
+    100% { transform: translate(-50%, -170%) scale(1.2); opacity: 0; }
+  }
+  @keyframes beat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.14); } 30% { transform: scale(1); } 45% { transform: scale(1.08); } }
+  @keyframes hint { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+
+  /* ---------- nút nhạc ---------- */
+  .music-btn {
+    position: fixed;
+    top: max(12px, env(safe-area-inset-top));
+    right: 12px;
+    z-index: 40;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1.5px solid #fff;
+    background: rgba(255, 249, 242, .9);
+    color: var(--rose-700);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    box-shadow: 0 6px 16px -6px rgba(168, 78, 100, .4);
+  }
+  .music-btn.playing svg { animation: wiggle 1.4s ease-in-out infinite; }
+  .music-btn:not(.off) .slash { display: none; }
+  .music-btn.off { color: var(--ink-soft); }
+  @keyframes wiggle { 0%, 100% { transform: rotate(-8deg); } 50% { transform: rotate(8deg); } }
+
+  /* ---------- màn mở đầu ---------- */
+  .gate {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 24px 16px;
+    text-align: center;
+    background:
+      radial-gradient(circle at 50% 46%, #fbe3e6 0, transparent 46%),
+      linear-gradient(170deg, #fcf4ef 0%, #f8e8e6 55%, #f5eee4 100%);
+    transition: opacity .9s ease, transform .9s ease, visibility 0s linear .9s;
+  }
+  .gate.hide { opacity: 0; transform: scale(1.06); visibility: hidden; }
+  .pill {
+    font-weight: 700;
+    font-size: .82rem;
+    letter-spacing: .1em;
+    color: var(--rose-700);
+    background: rgba(255, 249, 242, .75);
+    border: 1.5px solid var(--rose-200);
+    padding: .4em 1.1em;
+    border-radius: 999px;
+  }
+  .gate-title {
+    font-family: "Dancing Script", cursive;
+    font-weight: 700;
+    font-size: clamp(2.4rem, 11vw, 3.4rem);
+    line-height: 1.1;
+    color: var(--rose-500);
+  }
+  .gate-heart {
+    position: relative;
+    width: 132px;
+    height: 132px;
+    margin: 18px 0 6px;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+  .gate-heart::before {
+    content: "";
+    position: absolute;
+    inset: -26px;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(232, 160, 174, .45), transparent);
+    animation: glow 2.4s ease-in-out infinite;
+  }
+  @keyframes glow { 0%, 100% { transform: scale(.9); opacity: .7; } 50% { transform: scale(1.1); opacity: 1; } }
+  .gate-heart svg { position: relative; width: 100%; height: 100%; animation: beat 1.4s ease-in-out infinite; }
+  .gate-heart:focus-visible { outline: 3px dashed var(--rose-400); outline-offset: 8px; }
+  .gate-hint { color: var(--ink-soft); font-weight: 600; animation: hint 1.8s ease-in-out infinite; }
+  .link-btn {
+    background: none;
+    border: 0;
+    padding: 6px 10px;
+    font: 600 .85rem "Quicksand", system-ui, sans-serif;
+    color: var(--ink-soft);
+    text-decoration: underline dotted;
+    text-underline-offset: 4px;
+    cursor: pointer;
+  }
+
+  /* ---------- nội dung ---------- */
+  .wrap {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 480px);
+    margin: 0 auto;
+    padding: 70px 18px 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 34px;
+    text-align: center;
+  }
+  .rv { opacity: 0; transform: translateY(26px); transition: opacity .9s ease, transform .9s cubic-bezier(.2, .9, .3, 1); transition-delay: var(--d, 0s); }
+  .rv.in { opacity: 1; transform: none; }
+
+  .names { font-family: "Dancing Script", cursive; font-weight: 700; font-size: 1.6rem; color: var(--rose-500); }
+  .names .amp { color: var(--gold); padding: 0 .15em; }
+
+  .polaroid {
+    position: relative;
+    width: min(86vw, 340px);
+    background: #fff;
+    padding: 12px 12px 0;
+    border-radius: 6px;
+    box-shadow: 0 24px 44px -24px rgba(78, 59, 63, .55), 0 2px 6px rgba(78, 59, 63, .08);
+    transform: rotate(-2.5deg);
+  }
+  .polaroid.rv { transform: translateY(26px) rotate(-2.5deg); }
+  .polaroid.rv.in { transform: rotate(-2.5deg); }
+  .polaroid img { display: block; width: 100%; aspect-ratio: 1080 / 976; object-fit: cover; border-radius: 3px; background: var(--rose-100); }
+  .polaroid figcaption { font-family: "Dancing Script", cursive; font-weight: 700; font-size: 1.35rem; color: var(--rose-500); padding: 10px 0 14px; }
+  .polaroid::before, .polaroid::after {
+    content: "";
+    position: absolute;
+    top: -12px;
+    width: 86px;
+    height: 24px;
+    opacity: .9;
+  }
+  .polaroid::before { left: -14px; transform: rotate(-30deg); background: repeating-linear-gradient(45deg, var(--rose-200) 0 8px, var(--rose-100) 8px 16px); }
+  .polaroid::after { right: -14px; transform: rotate(28deg); background: repeating-linear-gradient(45deg, var(--sage-300) 0 8px, var(--sage-200) 8px 16px); }
+
+  .title {
+    font-family: "Dancing Script", cursive;
+    font-weight: 700;
+    font-size: clamp(3rem, 15vw, 4.4rem);
+    line-height: 1;
+    background: linear-gradient(90deg, #c96b7e, #d9937f 55%, #c9a66b);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    padding: .05em .1em;
+  }
+  .sub { margin-top: 6px; color: var(--ink-soft); font-weight: 600; letter-spacing: .06em; }
+
+  .card {
+    width: 100%;
+    background: rgba(255, 251, 246, .92);
+    border: 1.5px solid #fff;
+    border-radius: 22px;
+    box-shadow: 0 18px 36px -26px rgba(168, 78, 100, .6);
+    padding: 22px 18px;
+  }
+  .card h2 { font-size: 1.05rem; font-weight: 700; color: var(--ink-soft); letter-spacing: .02em; }
+
+  .counter { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 14px; }
+  .unit { background: var(--cream); border: 1.5px solid var(--rose-100); border-radius: 16px; padding: 12px 4px 10px; }
+  .unit b { display: block; font-size: clamp(1.5rem, 7vw, 2rem); line-height: 1.1; color: var(--rose-700); font-variant-numeric: tabular-nums; }
+  .unit span { font-size: .78rem; font-weight: 600; color: var(--ink-soft); }
+  .unit:first-child { background: linear-gradient(160deg, #fbe3e6, #f3c9cf); border-color: transparent; }
+
+  /* lá thư */
+  .letter {
+    position: relative;
+    width: 100%;
+    text-align: left;
+    background-color: var(--paper);
+    background-image: radial-gradient(rgba(201, 107, 126, .15) 1.1px, transparent 1.4px);
+    background-size: 22px 22px;
+    border-radius: 18px;
+    box-shadow: 0 24px 44px -26px rgba(120, 60, 75, .5);
+    padding: 26px 22px 24px;
+    cursor: pointer;
+  }
+  .letter::before, .letter::after { content: ""; position: absolute; top: -10px; width: 78px; height: 22px; opacity: .88; }
+  .letter::before { left: 18px; transform: rotate(-6deg); background: repeating-linear-gradient(45deg, var(--rose-200) 0 7px, var(--rose-100) 7px 14px); }
+  .letter::after { right: 18px; transform: rotate(5deg); background: repeating-linear-gradient(45deg, var(--sage-300) 0 7px, var(--sage-200) 7px 14px); }
+  .letter-date { font-family: "Patrick Hand", cursive; color: var(--ink-soft); font-size: 1rem; }
+  .typed { margin-top: 10px; min-height: 12em; font-family: "Patrick Hand", cursive; font-size: clamp(1.12rem, 4.6vw, 1.26rem); line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .sign { white-space: pre-wrap; text-align: right; margin-top: 10px; min-height: 2.6em; font-family: "Dancing Script", cursive; font-weight: 700; font-size: 1.5rem; line-height: 1.3; color: var(--rose-500); }
+  .hl { color: var(--rose-700); font-weight: 700; background: linear-gradient(transparent 62%, #f6d9dd 62%); border-radius: 2px; }
+  .caret { display: inline-block; width: 2px; height: 1.05em; margin-left: 2px; vertical-align: -.15em; background: var(--rose-500); border-radius: 2px; animation: caret 1s steps(1) infinite; }
+  @keyframes caret { 50% { opacity: 0; } }
+  .letter-tip { margin-top: 6px; font-size: .78rem; color: var(--ink-soft); text-align: center; opacity: .8; }
+
+  /* dòng thời gian */
+  .timeline { list-style: none; margin-top: 16px; text-align: left; position: relative; }
+  .timeline::before { content: ""; position: absolute; left: 10px; top: 6px; bottom: 6px; width: 2px; border-radius: 2px; background: linear-gradient(var(--sage-300), var(--rose-200)); }
+  .timeline li { position: relative; padding: 0 0 20px 38px; }
+  .timeline li:last-child { padding-bottom: 0; }
+  .timeline .dot { position: absolute; left: 0; top: 2px; width: 22px; height: 22px; }
+  .timeline li:last-child .dot { animation: beat 1.4s ease-in-out infinite; }
+  .t-date { display: inline-block; font-size: .78rem; font-weight: 700; letter-spacing: .06em; color: var(--rose-700); background: var(--rose-100); padding: .15em .7em; border-radius: 999px; }
+  .t-title { display: block; margin-top: 6px; font-size: 1.05rem; }
+  .t-text { margin-top: 2px; color: var(--ink-soft); font-weight: 600; font-size: .93rem; line-height: 1.5; }
+  .t-link { display: inline-block; margin-top: 8px; font-size: .86rem; font-weight: 700; color: var(--rose-700); text-decoration: none; border-bottom: 1.5px dotted var(--rose-300); }
+
+  .next-title { font-family: "Dancing Script", cursive; font-weight: 700; font-size: 2rem; color: var(--rose-500); }
+  .next-text { margin-top: 6px; font-weight: 600; color: var(--ink); line-height: 1.6; text-wrap: balance; }
+  .next-text b { color: var(--rose-700); }
+
+  footer { color: var(--ink-soft); font-size: .8rem; font-weight: 600; opacity: .85; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body class="locked">
+
+<div id="fx" aria-hidden="true"></div>
+
+<button class="music-btn" id="musicBtn" aria-label="Bật/tắt nhạc" aria-pressed="true">
+  <svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true">
+    <path d="M9 18V5l11-2v13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <circle cx="6.5" cy="18" r="2.6" fill="currentColor" />
+    <circle cx="17.5" cy="16" r="2.6" fill="currentColor" />
+    <line class="slash" x1="3" y1="3" x2="21" y2="21" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+  </svg>
+</button>
+
+<!-- Màn mở đầu: chạm tim để vào (và để trình duyệt cho phép phát nhạc) -->
+<div class="gate" id="gate">
+  <span class="pill" id="gatePill"></span>
+  <h1 class="gate-title" id="gateTitle"></h1>
+  <button class="gate-heart" id="gateHeart" aria-label="Mở trang kỷ niệm">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <defs>
+        <linearGradient id="hg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#e3a7b1" />
+          <stop offset="1" stop-color="#c96b7e" />
+        </linearGradient>
+      </defs>
+      <path d="M12 21 C5 15.5 2 12.5 2 8.5 C2 5.5 4.3 3.5 7 3.5 C9 3.5 10.8 4.6 12 6.4 C13.2 4.6 15 3.5 17 3.5 C19.7 3.5 22 5.5 22 8.5 C22 12.5 19 15.5 12 21Z" fill="url(#hg)" />
+      <path d="M6.5 6.2 C5.2 6.4 4.3 7.4 4.3 8.7" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="1" stroke-linecap="round" />
+    </svg>
+  </button>
+  <p class="gate-hint">chạm vào trái tim nha 👆</p>
+  <button class="link-btn" id="silentBtn">hoặc mở không có tiếng 🔇</button>
+</div>
+
+<main class="wrap">
+  <p class="names rv" id="names"></p>
+
+  <figure class="polaroid rv" style="--d:.1s">
+    <img id="photo" alt="" />
+    <figcaption id="photoCaption"></figcaption>
+  </figure>
+
+  <header class="rv" style="--d:.15s">
+    <h1 class="title" id="title"></h1>
+    <p class="sub" id="sub"></p>
+  </header>
+
+  <section class="card rv">
+    <h2 id="counterLabel"></h2>
+    <div class="counter">
+      <div class="unit"><b id="cDays">0</b><span>ngày</span></div>
+      <div class="unit"><b id="cHours">00</b><span>giờ</span></div>
+      <div class="unit"><b id="cMins">00</b><span>phút</span></div>
+      <div class="unit"><b id="cSecs">00</b><span>giây</span></div>
+    </div>
+  </section>
+
+  <article class="letter rv" id="letter" aria-live="polite">
+    <p class="letter-date" id="letterDate"></p>
+    <div class="typed" id="typed"></div>
+    <div class="sign" id="sign"></div>
+    <p class="letter-tip" id="letterTip">chạm vào thư để hiện hết chữ</p>
+  </article>
+
+  <section class="card rv">
+    <h2 id="timelineLabel"></h2>
+    <ol class="timeline" id="timeline"></ol>
+  </section>
+
+  <section class="card rv">
+    <p class="next-title" id="nextTitle"></p>
+    <p class="next-text" id="nextText"></p>
+  </section>
+
+  <footer class="rv" id="footer"></footer>
+</main>
+
+<div id="fxTop" aria-hidden="true"></div>
+
+<script>
+/* =========================================================
+   ✏️  CHỈNH Ở ĐÂY
+   - **chữ** = chữ được tô hồng nổi bật
+   ========================================================= */
+const CONFIG = {
+  her: "Nhi Nhi",
+  me: "Đăng",
+  start: "2026-10-17T00:00:00+07:00", // ngày bắt đầu yêu nhau (giờ Việt Nam)
+  day: "17.11.2026",                  // ngày kỷ niệm của trang này
+
+  photo: "anh-doi.jpeg",
+  photoCaption: "mình của tháng đầu tiên",
+
+  music: "noi-nay-co-anh.mp3", // để trống "" nếu không muốn nhạc
+  musicStart: 0,               // phát từ giây thứ mấy
+  musicVolume: 0.8,
+
+  gateTitle: "Tròn 1 tháng rồi nè",
+  title: "Tròn 1 tháng",
+  counterLabel: "Mình đã thương nhau được",
+
+  letter: `Gửi **{her}**,
+
+Mới đó mà đã một tháng rồi. Một tháng chưa phải là dài, nhưng đủ để anh quen với việc sáng ra muốn nhắn cho em đầu tiên, tối về lại muốn nghe em kể hôm nay thế nào.
+
+Cảm ơn em vì đã chọn anh, và vì tháng đầu tiên này dễ thương hơn anh tưởng nhiều.
+
+Mình cứ từ từ nha, từng ngày một. Tháng sau, tháng sau nữa, **anh vẫn ở đây**.`,
+  signature: `Thương em,
+{me}`,
+
+  timelineLabel: "Tháng đầu tiên của mình",
+  // Thêm mốc của hai bạn vào đây (lần hẹn đầu, chuyến đi đầu...). link là tuỳ chọn.
+  timeline: [
+    { date: "17.10", title: "Ngày đầu tiên", text: "Ngày mình chính thức thành “mình”." },
+    { date: "20.10", title: "Lá thư đầu tiên", text: "Anh gửi em một lá thư nhỏ nhân ngày 20/10.", link: { href: "https://20th10.dangpham.id.vn", label: "Đọc lại lá thư →" } },
+    { date: "17.11", title: "Tròn 1 tháng", text: "Hôm nay nè. Cảm ơn em vì 31 ngày vừa qua." },
+  ],
+
+  nextTitle: "Hẹn tháng thứ {n} nha",
+  footer: "làm bằng cả trái tim · {me} 💗 {her}",
+};
+
+/* ========================================================= */
+
+const $ = (s) => document.querySelector(s);
+const pick = (a) => a[Math.floor(Math.random() * a.length)];
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const fill = (s) => s.replaceAll("{her}", CONFIG.her).replaceAll("{me}", CONFIG.me);
+const pad = (n) => String(n).padStart(2, "0");
+
+const START = new Date(CONFIG.start);
+const DAY = 86400000;
+const VN_OFFSET = 7 * 3600000;
+// ngày/tháng theo giờ Việt Nam, để ai mở ở đâu cũng ra cùng một kết quả
+const vnParts = (d) => {
+  const v = new Date(d.getTime() + VN_OFFSET);
+  return { y: v.getUTCFullYear(), m: v.getUTCMonth(), d: v.getUTCDate() };
+};
+const vnDate = (y, m, d) => new Date(Date.UTC(y, m, d) - VN_OFFSET);
+const fmt = (d) => { const p = vnParts(d); return `${pad(p.d)}.${pad(p.m + 1)}.${p.y}`; };
+
+function parseRich(text) {
+  return text
+    .split(/(\*\*[^*]+\*\*)/)
+    .filter(Boolean)
+    .map((p) => (/^\*\*[^*]+\*\*$/.test(p) ? { text: p.slice(2, -2), hl: true } : { text: p, hl: false }));
+}
+
+/* ---------- hình vẽ nhỏ theo bảng màu ---------- */
+const FX_COLORS = ["#efc3c9", "#e3a7b1", "#d58c99", "#c96b7e", "#ecdcb8", "#c9a66b", "#d5e2ce"];
+const SHAPES = {
+  heart: '<path d="M12 21 C5 15.5 2 12.5 2 8.5 C2 5.5 4.3 3.5 7 3.5 C9 3.5 10.8 4.6 12 6.4 C13.2 4.6 15 3.5 17 3.5 C19.7 3.5 22 5.5 22 8.5 C22 12.5 19 15.5 12 21Z"/>',
+  petal: '<path d="M12 2 C18 6 19 12 12 22 C5 12 6 6 12 2Z"/>',
+  spark: '<path d="M12 1 L14 10 L23 12 L14 14 L12 23 L10 14 L1 12 L10 10Z"/>',
+};
+function shape(kind, color, size) {
+  const c = kind === "spark" ? pick(["#c9a66b", "#e2c58f"]) : color;
+  return `<svg viewBox="0 0 24 24" width="${size.toFixed(0)}" height="${size.toFixed(0)}" fill="${c}">${SHAPES[kind]}</svg>`;
+}
+
+const fx = $("#fx");
+const fxTop = $("#fxTop");
+
+function ambient() {
+  if (document.hidden || reduceMotion) return;
+  const el = document.createElement("span");
+  el.className = "float";
+  el.innerHTML = shape(pick(["heart", "heart", "petal", "spark"]), pick(FX_COLORS), 10 + Math.random() * 14);
+  el.style.left = Math.random() * 100 + "vw";
+  el.style.opacity = (0.45 + Math.random() * 0.45).toFixed(2);
+  el.style.setProperty("--dur", 10 + Math.random() * 8 + "s");
+  el.style.setProperty("--sway", Math.random() * 90 - 45 + "px");
+  el.addEventListener("animationend", () => el.remove());
+  fx.appendChild(el);
+}
+setInterval(ambient, 900);
+
+function spark(x, y) {
+  const el = document.createElement("span");
+  el.className = "spark";
+  el.innerHTML = shape(pick(["heart", "heart", "petal", "spark"]), pick(FX_COLORS), 11 + Math.random() * 12);
+  el.style.left = x + "px";
+  el.style.top = y + "px";
+  fxTop.appendChild(el);
+  return el;
+}
+
+// pháo tim: các hạt bay ra rồi xếp thành hình trái tim
+function burstHeart(x, y, size = Math.min(innerWidth, 520) / 40) {
+  const count = reduceMotion ? 14 : 44;
+  for (let i = 0; i < count; i++) {
+    const t = (i / count) * Math.PI * 2;
+    const hx = 16 * Math.sin(t) ** 3 * size;
+    const hy = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t)) * size;
+    const el = spark(x, y);
+    el.animate(
+      [
+        { transform: "translate(-50%, -50%) scale(.2)", opacity: 0 },
+        { transform: `translate(calc(-50% + ${hx}px), calc(-50% + ${hy}px)) scale(1)`, opacity: 1, offset: 0.45 },
+        { transform: `translate(calc(-50% + ${hx}px), calc(-50% + ${hy}px)) scale(1)`, opacity: 1, offset: 0.75 },
+        { transform: `translate(calc(-50% + ${hx}px), calc(-50% + ${hy + 50}px)) scale(.6)`, opacity: 0 },
+      ],
+      { duration: 2600, delay: Math.random() * 120, easing: "cubic-bezier(.2,.8,.3,1)", fill: "backwards" }
+    ).onfinish = () => el.remove();
+  }
+}
+
+document.addEventListener("pointerdown", (e) => {
+  const el = document.createElement("span");
+  el.className = "tap-heart";
+  el.innerHTML = shape("heart", pick(["#d58c99", "#c96b7e", "#e3a7b1"]), 18);
+  el.style.left = e.clientX + "px";
+  el.style.top = e.clientY + "px";
+  el.addEventListener("animationend", () => el.remove());
+  fxTop.appendChild(el);
+});
+
+/* ---------- nhạc ---------- */
+const musicBtn = $("#musicBtn");
+const Music = {
+  on: true,
+  wanted: false,
+  audio: null,
+  fade: null,
+  init() {
+    if (!CONFIG.music) {
+      musicBtn.hidden = true;
+      return;
+    }
+    const a = new Audio();
+    a.preload = "metadata";
+    a.loop = true;
+    a.src = CONFIG.music + (CONFIG.musicStart ? `#t=${CONFIG.musicStart}` : "");
+    a.addEventListener("error", () => (musicBtn.hidden = true), { once: true });
+    this.audio = a;
+  },
+  start() {
+    this.wanted = true;
+    if (!this.on || !this.audio) return;
+    const p = this.audio.play();
+    if (p) p.catch(() => {});
+    clearInterval(this.fade);
+    const a = this.audio;
+    a.volume = 0;
+    this.fade = setInterval(() => {
+      a.volume = Math.min(CONFIG.musicVolume, a.volume + 0.03);
+      if (a.volume >= CONFIG.musicVolume) clearInterval(this.fade);
+    }, 80);
+    musicBtn.classList.add("playing");
+  },
+  stop() {
+    clearInterval(this.fade);
+    if (this.audio) this.audio.pause();
+    musicBtn.classList.remove("playing");
+  },
+  toggle() {
+    this.on = !this.on;
+    musicBtn.classList.toggle("off", !this.on);
+    musicBtn.setAttribute("aria-pressed", String(this.on));
+    if (this.on && this.wanted) this.start();
+    else this.stop();
+  },
+};
+Music.init();
+musicBtn.addEventListener("click", () => Music.toggle());
+document.addEventListener("visibilitychange", () => {
+  if (!Music.audio || !Music.wanted || !Music.on) return;
+  if (document.hidden) Music.audio.pause();
+  else Music.audio.play().catch(() => {});
+});
+
+/* ---------- nội dung ---------- */
+$("#gatePill").textContent = CONFIG.day.replaceAll(".", " · ");
+$("#gateTitle").textContent = fill(CONFIG.gateTitle);
+$("#names").append(CONFIG.her, Object.assign(document.createElement("span"), { className: "amp", textContent: "&" }), CONFIG.me);
+$("#photo").src = CONFIG.photo;
+$("#photo").alt = `${CONFIG.her} và ${CONFIG.me}`;
+$("#photoCaption").textContent = fill(CONFIG.photoCaption);
+$("#title").textContent = fill(CONFIG.title);
+$("#sub").textContent = `${fmt(START).slice(0, 5)} → ${CONFIG.day.slice(0, 5)}`;
+$("#counterLabel").textContent = fill(CONFIG.counterLabel);
+$("#letterDate").textContent = `♡ ${CONFIG.day}`;
+$("#timelineLabel").textContent = fill(CONFIG.timelineLabel);
+$("#footer").textContent = fill(CONFIG.footer);
+
+const HEART_DOT = `<svg class="dot" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#fff9f2"/><g transform="translate(4.4 4.6) scale(.64)"><path fill="#c96b7e" d="M12 21 C5 15.5 2 12.5 2 8.5 C2 5.5 4.3 3.5 7 3.5 C9 3.5 10.8 4.6 12 6.4 C13.2 4.6 15 3.5 17 3.5 C19.7 3.5 22 5.5 22 8.5 C22 12.5 19 15.5 12 21Z"/></g></svg>`;
+for (const item of CONFIG.timeline) {
+  const li = document.createElement("li");
+  li.innerHTML = HEART_DOT + `<span class="t-date"></span><b class="t-title"></b><p class="t-text"></p>`;
+  li.querySelector(".t-date").textContent = item.date;
+  li.querySelector(".t-title").textContent = fill(item.title);
+  li.querySelector(".t-text").textContent = fill(item.text);
+  if (item.link) {
+    const a = document.createElement("a");
+    a.className = "t-link";
+    a.href = item.link.href;
+    a.target = "_blank";
+    a.rel = "noopener";
+    a.textContent = item.link.label;
+    li.appendChild(a);
+  }
+  $("#timeline").appendChild(li);
+}
+
+/* ---------- bộ đếm ---------- */
+const cEls = { d: $("#cDays"), h: $("#cHours"), m: $("#cMins"), s: $("#cSecs") };
+function tick() {
+  const diff = Math.max(0, Date.now() - START.getTime());
+  const d = Math.floor(diff / DAY);
+  const h = Math.floor((diff % DAY) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  cEls.d.textContent = d;
+  cEls.h.textContent = pad(h);
+  cEls.m.textContent = pad(m);
+  cEls.s.textContent = pad(s);
+}
+tick();
+setInterval(tick, 1000);
+
+// đếm ngược tới ngày kỷ niệm tháng tiếp theo
+(function nextMonthsary() {
+  const s = vnParts(START);
+  const now = vnParts(new Date());
+  let y = now.y;
+  let m = now.d < s.d ? now.m : now.m + 1;
+  if (m > 11) { m -= 12; y++; }
+  const next = vnDate(y, m, s.d);
+  const todayStart = vnDate(now.y, now.m, now.d);
+  const days = Math.round((next - todayStart) / DAY);
+  const n = (y - s.y) * 12 + (m - s.m);
+  $("#nextTitle").textContent = fill(CONFIG.nextTitle).replace("{n}", n);
+  $("#nextText").innerHTML = "";
+  $("#nextText").append(
+    "Còn ",
+    Object.assign(document.createElement("b"), { textContent: `${days} ngày` }),
+    ` nữa là tới ${pad(s.d)}.${pad(m + 1)}. Anh đếm rồi đó 🌷`
+  );
+})();
+
+/* ---------- lá thư gõ chữ ---------- */
+const segmenter = Intl.Segmenter ? new Intl.Segmenter("vi", { granularity: "grapheme" }) : null;
+const graphemes = (s) => (segmenter ? Array.from(segmenter.segment(s), (x) => x.segment) : Array.from(s));
+const typedEl = $("#typed");
+const signEl = $("#sign");
+const caret = Object.assign(document.createElement("span"), { className: "caret" });
+let skipping = false;
+let typingStarted = false;
+
+const delayFor = (ch) => (ch === "\n" ? 220 : ".!?".includes(ch) ? 280 : ",;:".includes(ch) ? 130 : 24 + Math.random() * 26);
+
+async function typeInto(el, text) {
+  el.appendChild(caret);
+  for (const seg of parseRich(text)) {
+    const wrap = document.createElement(seg.hl ? "b" : "span");
+    if (seg.hl) wrap.className = "hl";
+    const node = document.createTextNode("");
+    wrap.appendChild(node);
+    el.insertBefore(wrap, caret);
+    const chars = graphemes(seg.text);
+    for (let i = 0; i < chars.length; i++) {
+      if (skipping) {
+        node.appendData(chars.slice(i).join(""));
+        break;
+      }
+      node.appendData(chars[i]);
+      await sleep(delayFor(chars[i]));
+    }
+  }
+}
+
+async function startLetter() {
+  if (typingStarted) return;
+  typingStarted = true;
+  await sleep(400);
+  await typeInto(typedEl, fill(CONFIG.letter));
+  if (!skipping) await sleep(500);
+  await typeInto(signEl, fill(CONFIG.signature));
+  caret.remove();
+  $("#letterTip").hidden = true;
+}
+$("#letter").addEventListener("click", () => {
+  if (typingStarted) skipping = true;
+  else {
+    skipping = true;
+    startLetter();
+  }
+});
+
+/* ---------- hiện dần khi cuộn ---------- */
+// trình duyệt quá cũ không có IntersectionObserver thì cứ hiện hết
+const io = !("IntersectionObserver" in window)
+  ? { observe: (el) => { el.classList.add("in"); if (el.id === "letter") startLetter(); }, unobserve() {} }
+  : new IntersectionObserver(
+  (entries) => {
+    for (const e of entries) {
+      if (!e.isIntersecting) continue;
+      e.target.classList.add("in");
+      if (e.target.id === "letter") startLetter();
+      io.unobserve(e.target);
+    }
+  },
+  { threshold: 0.25 }
+);
+
+/* ---------- mở trang ---------- */
+let opened = false;
+function openPage(withSound) {
+  if (opened) return;
+  opened = true;
+  if (!withSound && Music.on) Music.toggle();
+  Music.start();
+  const r = $("#gateHeart").getBoundingClientRect();
+  burstHeart(r.left + r.width / 2, r.top + r.height / 2);
+  $("#gate").classList.add("hide");
+  document.body.classList.remove("locked");
+  setTimeout(() => document.querySelectorAll(".rv").forEach((el) => io.observe(el)), 350);
+}
+$("#gateHeart").addEventListener("click", () => openPage(true));
+$("#silentBtn").addEventListener("click", () => openPage(false));
+</script>
+</body>
+</html>
