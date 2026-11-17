@@ -398,7 +398,7 @@ const CONFIG = {
   music: "cho-chut.mp3",
   musicVolume: 0.9,
   letterLink: "https://20th10.dangpham.id.vn",
-  instagram: "", // tên Instagram của bạn (không có @) → hiện nút "nhắn cho Đăng" + lời nhắc tag
+  instagram: "hai.dang.pham", // tên Instagram (không có @) → hiện nút "nhắn cho Đăng" + lời nhắc tag
 };
 
 /* ========================================================= */
@@ -749,8 +749,8 @@ function saveImage() {
   return true;
 }
 
-const SAVED_MSG = "Đã lưu ảnh ✓ Mở Instagram → Tin mới → chọn ảnh này nha";
 const afterShareMsg = () => (CONFIG.instagram ? `Đăng xong nhớ tag @${CONFIG.instagram} nha 👀` : `Đăng xong nhớ cho ${CONFIG.me} xem nha 👀`);
+const SAVED_MSG = `Đã lưu ảnh ✓ Mở Instagram → Tin mới → chọn ảnh này nha. ${afterShareMsg()}`;
 
 $("#shareBtn").addEventListener("click", async () => {
   if (!shareFile) {
@@ -771,7 +771,7 @@ $("#shareBtn").addEventListener("click", async () => {
 });
 $("#saveBtn").addEventListener("click", async () => {
   await buildShare();
-  if (saveImage()) shareStatus("Đã lưu ảnh về máy ✓");
+  if (saveImage()) shareStatus(`Đã lưu ảnh về máy ✓ ${afterShareMsg()}`);
 });
 if (CONFIG.instagram) {
   $("#dmBtn").href = `https://ig.me/m/${encodeURIComponent(CONFIG.instagram)}`;
