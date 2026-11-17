@@ -220,15 +220,12 @@
   .s-thanks .chips span { color: var(--melon); }
   .s-thanks .after { margin-top: 30px; font-weight: 800; font-size: clamp(19px, 5.6vw, 23px); line-height: 1.45; }
 
-  /* 8. đếm ngược + chữ ký */
-  .cd-card { position: relative; width: 100%; max-width: 320px; background: #fff; color: #111; border-radius: 22px; padding: 18px 16px 16px; box-shadow: 0 24px 50px -20px rgba(0, 0, 0, .7); --r: -2deg; }
-  .cd-title { font-family: var(--modern); font-weight: 700; font-size: 1.5rem; letter-spacing: .06em; background: linear-gradient(90deg, #ff8a3d, #ff3d6e, #b43dff); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .cd { display: flex; align-items: flex-start; justify-content: center; gap: 6px; margin-top: 10px; }
-  .cd span { min-width: 72px; background: #f1f1f1; border-radius: 12px; padding: 8px 4px 6px; }
-  .cd span b { display: block; font-family: var(--mono); font-size: 2rem; font-weight: 700; font-variant-numeric: tabular-nums; }
-  .cd span small { font-size: .74rem; font-weight: 700; color: #777; }
-  .cd i { font-family: var(--mono); font-size: 1.8rem; font-weight: 700; padding-top: 6px; font-style: normal; }
-  .cd-date { margin-top: 10px; font-weight: 700; color: #777; font-size: .85rem; }
+  /* 8. lưu vào tin nổi bật + chữ ký */
+  .hl-wrap { position: relative; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .hl-ring { padding: 5px; }
+  .hl-av { width: 150px; height: 150px; }
+  .hl-name { font-weight: 800; font-size: 1.05rem; text-shadow: 0 1px 6px rgba(0, 0, 0, .5); }
+  .pin-chip { position: relative; margin-top: 22px; background: #fff; color: #111; font-weight: 800; font-size: .98rem; padding: .55em 1em; border-radius: 12px; box-shadow: 0 10px 22px -10px rgba(0, 0, 0, .6); }
   .sig-neon { position: relative; margin-top: 34px; font-family: var(--script); font-size: clamp(24px, 7vw, 30px); line-height: 1.45; color: #ffe3f0; text-shadow: 0 0 6px var(--neon), 0 0 20px var(--neon); }
   .sig { position: relative; margin-top: 8px; font-family: var(--mono); font-weight: 700; opacity: .9; }
 
@@ -335,24 +332,20 @@ Một tháng chưa phải là dài,"></p>
 
       <!-- 7 -->
       <article class="slide s-thanks" data-dur="6500">
-        <div class="chips pop" style="--r:3deg"><span>Cảm ơn em</span><br /><span>vì đã chọn anh.</span></div>
-        <p class="after rise" style="--d:.7s">Mình cứ từ từ nha,<br />từng ngày một.</p>
+        <div class="chips pop" style="--r:3deg"><span>Cảm ơn em</span><br /><span>vì đã thích</span><br /><span>anh trước 🙈</span></div>
+        <p class="after rise" style="--d:.7s">Giờ tới lượt anh<br />thích em nhiều hơn rồi nha.</p>
       </article>
 
       <!-- 8 -->
       <article class="slide s-final" data-dur="8000">
         <div class="blurbg"></div><div class="shade"></div>
-        <div class="cd-card pop" style="--d:.1s">
-          <p class="cd-title" id="cdTitle"></p>
-          <div class="cd">
-            <span><b id="cdD">0</b><small>ngày</small></span><i>:</i>
-            <span><b id="cdH">00</b><small>giờ</small></span><i>:</i>
-            <span><b id="cdM">00</b><small>phút</small></span>
-          </div>
-          <p class="cd-date" id="cdDate"></p>
+        <div class="hl-wrap pop" style="--d:.1s">
+          <span class="ring hl-ring"><span class="avatar hl-av"></span></span>
+          <p class="hl-name">Tháng đầu tiên</p>
         </div>
-        <p class="sig-neon rise" style="--d:.6s">Tháng sau, tháng sau nữa<br />anh vẫn ở đây ♥</p>
-        <p class="sig rise" style="--d:1s" id="sig"></p>
+        <p class="pin-chip pop" style="--d:.5s; --r:-3deg">📌 đã lưu vào tin nổi bật</p>
+        <p class="sig-neon rise" style="--d:.9s">Tháng đầu tiên của tụi mình,<br />anh giữ lại ở đây nè ♥</p>
+        <p class="sig rise" style="--d:1.3s" id="sig"></p>
       </article>
     </div>
 
@@ -400,9 +393,6 @@ const pad = (n) => String(n).padStart(2, "0");
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const START = new Date(CONFIG.start);
 const DAY = 86400000;
-const VN = 7 * 3600000;
-const vnParts = (d) => { const v = new Date(d.getTime() + VN); return { y: v.getUTCFullYear(), m: v.getUTCMonth(), d: v.getUTCDate() }; };
-const vnDate = (y, m, d) => new Date(Date.UTC(y, m, d) - VN);
 
 /* ---------- nội dung ---------- */
 $("#startName").textContent = CONFIG.me;
@@ -415,25 +405,10 @@ $("#typeTag").textContent = `// từ ${CONFIG.me}, gửi ${CONFIG.her}`;
 $("#sig").textContent = `— ${CONFIG.me}`;
 $("#letterLink").href = $("#endLetter").href = CONFIG.letterLink;
 
-// mốc kỷ niệm tháng tiếp theo
-const S = vnParts(START);
-const NOW = vnParts(new Date());
-let ny = NOW.y;
-let nm = NOW.d < S.d ? NOW.m : NOW.m + 1;
-if (nm > 11) { nm -= 12; ny++; }
-const NEXT = vnDate(ny, nm, S.d);
-$("#cdTitle").textContent = `TRÒN ${(ny - S.y) * 12 + (nm - S.m)} THÁNG`;
-$("#cdDate").textContent = `${pad(S.d)}.${pad(nm + 1)}.${ny}`;
-
 function tick() {
-  const now = Date.now();
-  const diff = Math.max(0, now - START.getTime());
+  const diff = Math.max(0, Date.now() - START.getTime());
   $("#sDays").textContent = Math.floor(diff / DAY);
   $("#sClock").textContent = `${pad(Math.floor((diff % DAY) / 3600000))}:${pad(Math.floor((diff % 3600000) / 60000))}:${pad(Math.floor((diff % 60000) / 1000))}`;
-  const left = Math.max(0, NEXT.getTime() - now);
-  $("#cdD").textContent = Math.floor(left / DAY);
-  $("#cdH").textContent = pad(Math.floor((left % DAY) / 3600000));
-  $("#cdM").textContent = pad(Math.floor((left % 3600000) / 60000));
 }
 tick();
 setInterval(tick, 1000);
